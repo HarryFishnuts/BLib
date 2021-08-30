@@ -239,10 +239,23 @@ void BLEditITexIndexVStr(BLIndexedTexture* iTexPtr, const BLByte* VSTR);
 *	BLColor bg -> background color
 *	BLColor fg -> foreground color
 * RETURNS:
-*	void
-* NOTE:
+*	BLIndexedTexture made from a given VStr
+* NOTE: N/A
 *************************************************************/
 BLIndexedTexture BLCreateIndexedTextureVStr(const BLByte* VSTR, BLColor bg, BLColor fg);
+
+/*************************************************************
+* NAME: BLCreateFontVStr
+* DATE: 2021 - 08 - 30
+* PARAMS:
+*	const BLByte* VSTR -> VSTR to read from
+*	BLColor bg -> background color
+*	BLColor fg -> foreground color
+* RETURNS:
+*	BLFixedTexFont created from VStr
+* NOTE: N/A
+*************************************************************/
+BLFixedTexFont BLCreateFontVStr(const BLByte* VSTR, BLColor bg, BLColor fg);
 
 /*************************************************************
 * NAME: BLInitGFont
