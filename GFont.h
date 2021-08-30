@@ -61,6 +61,22 @@
 #define BL_VSTR_EIGHT "14131211203132333410302422"
 #define BL_VSTR_NINE  "14131231323334302422"
 
+#define BL_VSTR_SPACE      ""
+#define BL_VSTR_EXCLAIM    "24232220"
+#define BL_VSTR_HASHTAG    "01031413121110232134333231304341"
+#define BL_VSTR_DOLLAR     ""
+#define BL_VSTR_PERCENT    "00112233440440"
+#define BL_VSTR_AND        ""
+#define BL_VSTR_APOSTROPHE "2423"
+#define BL_VSTR_BRACEOPEN  "2413121120"
+#define BL_VSTR_BRACECLOSE "2433323120"
+#define BL_VSTR_ASTERISK   "2423221333"
+#define BL_VSTR_PLUS       "021222324224232120"
+#define BL_VSTR_COMMA      "2110"
+#define BL_VSTR_MINUS      "0212223242"
+#define BL_VSTR_PERIOD     "11102120"
+#define BL_VSTR_SLASH      "3433221110"
+
 typedef uint8_t BLCIndex;
 
 /*************************************************************
