@@ -35,7 +35,7 @@
 *	Call this function before a render pass to set up the
 *	texture environment
 *************************************************************/
-static void BLHelperSetupTexEnv( BLTextureHandle texHandle)
+static inline void BLHelperSetupTexEnv( BLTextureHandle texHandle)
 {
 	glShadeModel(GL_FLAT);
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
@@ -56,7 +56,7 @@ static void BLHelperSetupTexEnv( BLTextureHandle texHandle)
 *	This function sets up the projection matrix based on the
 *	viewport dimensions
 *************************************************************/
-static void BLHelperSetupProjectionMatrix( )
+static inline void BLHelperSetupProjectionMatrix( )
 {
 	//var to get viewport dimensions
 	//0 -> X, 1 -> Y, 2 -> width, 3 -> height

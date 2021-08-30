@@ -20,10 +20,41 @@
 
 #include <stdio.h>  // I/O
 #include <stdlib.h> // Memory management
+#include <string.h> // For string parsing
 
-typedef BLFontSet
+/*************************************************************
+* NAME: BLCreateIndexedTexture
+* DATE: 2021 - 08 - 30
+* PARAMS:
+*	none
+* RETURNS:
+*	void
+* NOTE:
+*	This function ZEROS out the ITEX data so that no
+*	garbage data seeps into it
+*************************************************************/
+BLIndexedTexture BLCreateIndexedTexture()
 {
-	
+	//texture object to return
+	BLIndexedTexture iTex;
+
+	//clear indexes
+	for(int i = 0; i < BL_FIXEDTEX_SIZE_FONT; i++)
+	{
+		for(int j = 0; j < BL_FIXEDTEX_SIZE_FONT; j++)
+		{
+			iTex.tIndex[i][j] = (BLCIndex)NULL;
+		}
+	}
+
+	//clear colors
+	for(int i = 0; i < BL_GFONT_MAX_COLOR_INDEX; i++)
+	{
+		iTex.tColors[i] = BLCreateColor(0, 0, 0, 0);
+	}
+
+	//end
+	return iTex;
 }
 
 /*************************************************************
@@ -139,4 +170,103 @@ BLFixedTexFont BLCompileITex(BLIndexedTexture iTex)
 
 	//end
 	return fontTex;
+}
+
+/*************************************************************
+* NAME: BLCreateArrayVertFromString
+* DATE: 2021 - 08 - 30
+* PARAMS:
+*	BLVert2i* vBuffer -> vert buffer to write to
+*	const BLByte* str   -> string to parse from
+*	BLUint strSize -> size of string
+* RETURNS:
+*	int, 1 for success, 0 for failure (string could not be parsed!)
+* NOTE:
+*	string should be a EVEN number long
+*************************************************************/
+int BLCreateArrayVertFromString(BLVert2i* vBuffer, const BLByte* str, BLUInt strSize)
+{
+	//check if odd
+	if(!(strSize % 2 == 0))
+	{
+		//failure
+		return 0;
+	}
+
+	//counter var
+	int vIndex = 0;
+
+	//loop through string 2 bytes at a time
+	for(int i = 0; i < strSize; i += 2)
+	{
+		//set X and Y values
+		vBuffer[vIndex].X = (int)str[i + 0] - (int)'0';
+		vBuffer[vIndex].Y = (int)str[i + 1] - (int)'0';
+
+		//increment vIndex
+		vIndex++;
+	}
+
+	//end
+	return 1;
+}
+
+/*************************************************************
+* NAME: BLEditITexIndexVStr
+* DATE: 2021 - 08 - 29
+* PARAMS:
+*	BLIndexedTexture* iTexPtr -> iTex to edit
+*	const BLByte* VSTR -> string to parse
+* RETURNS:
+*	void
+* NOTE:
+*	Only use if YOU KNOW WHAT YOU ARE DOING
+*************************************************************/
+void BLEditITexIndexVStr(BLIndexedTexture* iTexPtr, const BLByte* VSTR)
+{
+	//vertex buffer
+	BLVert2i vBuf[BL_GFONT_MAX_VBUF_SIZE];
+
+	//clear vertex buffer
+	for(int i = 0; i < BL_GFONT_MAX_VBUF_SIZE; i++)
+	{
+		vBuf[i].X = (BLInt)NULL;
+		vBuf[i].Y = (BLInt)NULL;
+	}
+
+	//init vBuf
+	BLCreateArrayVertFromString(vBuf, VSTR, strlen(VSTR));
+
+	//write to iTex
+	BLEditITexIndexArrayVert(iTexPtr, vBuf, strlen(VSTR) / 2, 1);
+
+	//end
+	return;
+}
+
+/*************************************************************
+* NAME: BLCreateIndexedTextureVStr
+* DATE: 2021 - 08 - 30
+* PARAMS:
+*	const BLByte* VSTR -> VSTR to read from
+*	BLColor bg -> background color
+*	BLColor fg -> foreground color
+* RETURNS:
+*	void
+* NOTE:
+*************************************************************/
+BLIndexedTexture BLCreateIndexedTextureVStr(const BLByte* VSTR, BLColor bg, BLColor fg)
+{
+	//create iTex object
+	BLIndexedTexture iTex = BLCreateIndexedTexture( );
+
+	//set colors
+	BLEditITexColor(&iTex, bg, 0);
+	BLEditITexColor(&iTex, fg, 1);
+
+	//draw VSTR
+	BLEditITexIndexVStr(&iTex, VSTR);
+
+	//end
+	return iTex;
 }

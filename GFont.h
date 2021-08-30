@@ -21,6 +21,14 @@
 #include "GTexLib.h" // For color related struct
 
 #define BL_GFONT_MAX_COLOR_INDEX 0xf
+#define BL_GFONT_MAX_VBUF_SIZE 0x80
+
+#define BL_VSTR_A "10111213243332313022"
+#define BL_VSTR_B "101112131424333122203034"
+#define BL_VSTR_C "11121324342030"
+#define BL_VSTR_D "101112131424344342413020"
+#define BL_VSTR_E "1011121314243422322030"
+#define BL_VSTR_F "101112131424342232"
 
 typedef uint8_t BLCIndex;
 
@@ -59,8 +67,8 @@ typedef int8_t BLFChar;
 * NAME: BLVert2i
 * DATE: 2021 - 08 - 29
 * MEMBERS:
-*	BLInt X -> X value
-*	BLInt Y -> Y value
+*	BLInt X -> X position
+*	BLInt Y -> Y position
 * NOTE: N/A
 *************************************************************/
 typedef struct BLVert2i
@@ -75,14 +83,26 @@ typedef struct BLVert2i
 * MEMBERS:
 *	BLColor tColors -> colors available to index to
 *	BLColorIndex tIndex[][] -> index array
-* NOTE: 
-*	iTextures have no associated Create function
+* NOTE: N/A
 *************************************************************/
 typedef struct BLIndexedTexture
 {
 	BLColor tColors[BL_GFONT_MAX_COLOR_INDEX];
 	BLCIndex tIndex[BL_FIXEDTEX_SIZE_FONT][BL_FIXEDTEX_SIZE_FONT];
 }BLIndexedTexture;
+
+/*************************************************************
+* NAME: BLCreateIndexedTexture
+* DATE: 2021 - 08 - 30
+* PARAMS:
+*	none
+* RETURNS:
+*	void
+* NOTE:
+*	This function ZEROS out the ITEX data so that no
+*	garbage data seeps into it
+*************************************************************/
+BLIndexedTexture BLCreateIndexedTexture();
 
 /*************************************************************
 * NAME: BLEditITexColor
@@ -154,21 +174,62 @@ void BLEditITexIndexArrayVert(BLIndexedTexture* iTexPtr, BLVert2i* vArr, BLUInt 
 BLFixedTexFont BLCompileITex(BLIndexedTexture iTex);
 
 /*************************************************************
-* NAME: BLInitGFont
+* NAME: BLCreateArrayVertFromString
+* DATE: 2021 - 08 - 30
+* PARAMS:
+*	BLVert2i* vBuffer -> vert buffer to write to
+*	const BLByte* str   -> string to parse from
+*	BLUint strSize -> size of string
+* RETURNS:
+*	int, 1 for success, 0 for failure (string could not be parsed!)
+* NOTE:
+*	string should be a EVEN number long
+*************************************************************/
+int BLCreateArrayVertFromString(BLVert2i* vBuffer, const BLByte* str, BLUInt strSize);
+
+/*************************************************************
+* NAME: BLEditITexIndexVStr
 * DATE: 2021 - 08 - 29
 * PARAMS:
-*	none
+*	BLIndexedTexture* iTexPtr -> iTex to edit
+*	const BLByte* VSTR -> string to parse
 * RETURNS:
 *	void
 * NOTE:
+*	Only use if YOU KNOW WHAT YOU ARE DOING
+*************************************************************/
+void BLEditITexIndexVStr(BLIndexedTexture* iTexPtr, const BLByte* VSTR);
+
+/*************************************************************
+* NAME: BLCreateIndexedTextureVStr
+* DATE: 2021 - 08 - 30
+* PARAMS:
+*	const BLByte* VSTR -> VSTR to read from
+*	BLColor bg -> background color
+*	BLColor fg -> foreground color
+* RETURNS:
+*	void
+* NOTE:
+*************************************************************/
+BLIndexedTexture BLCreateIndexedTextureVStr(const BLByte* VSTR, BLColor bg, BLColor fg);
+
+/*************************************************************
+* NAME: BLInitGFont
+* DATE: 2021 - 08 - 30
+* PARAMS:
+*	none
+* RETURNS:
+*	int, 1 for success, 0 for failure (need rendering context)
+* NOTE:
 *	Generates 4 fontsets, takes up a considerable amount of
 *	space in memory
+*	Requires an ACTIVE window to run!
 *************************************************************/
-void BLInitGFont( );
+int BLInitGFont( );
 
 /*************************************************************
 * NAME: BLTerminateGFont
-* DATE: 2021 - 08 - 29
+* DATE: 2021 - 08 - 30
 * PARAMS:
 *	none
 * RETURNS:
