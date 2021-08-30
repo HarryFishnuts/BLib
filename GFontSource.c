@@ -186,13 +186,6 @@ BLFixedTexFont BLCompileITex(BLIndexedTexture iTex)
 *************************************************************/
 int BLCreateArrayVertFromString(BLVert2i* vBuffer, const BLByte* str, BLUInt strSize)
 {
-	//check if odd
-	if(!(strSize % 2 == 0))
-	{
-		//failure
-		return 0;
-	}
-
 	//counter var
 	int vIndex = 0;
 
