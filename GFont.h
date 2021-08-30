@@ -22,6 +22,14 @@
 
 #define BL_GFONT_MAX_COLOR_INDEX 0xf
 #define BL_GFONT_MAX_VBUF_SIZE 0x80
+#define BL_GFONT_FONT_COUNT 50
+#define BL_GFONT_FONTSET_COUNT 5
+
+#define BL_GFONT_WHITE    255, 255, 255, 255
+#define BL_GFONT_BLACK    000, 000, 000, 255
+#define BL_GFONT_BURGUNDY 100, 000, 020, 255
+#define BL_GFONT_NAVY     000, 040, 100, 255
+#define BL_GFONT_TAN      210, 180, 120, 255
 
 #define BL_VSTR_A "10111213243332313022"
 #define BL_VSTR_B "101112131424333122203034"
@@ -88,27 +96,41 @@ typedef uint8_t BLCIndex;
 *	BLFChar is signed
 *	BTIS follows the following sequence:
 *		[00 - 09] numerical (0 - 10)
-*		[10 - 36] letters   (A - Z)
-*		[37 - 51] symbols
+*		[10 - 35] letters   (A - Z)
+*		[37 - 50] symbols
 *	
 *	NOTE THAT THE SYMBOLS SEQUENCE IN BTIS DIRECTLY MAPS TO
 *	THE VALUES [32 - 47] IN ASCII
 * 
 *	ALL BTIS VALUES AND THEIR ASCII COUNTERPARTS IN ORDER:
 * 
-*	|	0.  0	|   11. B	|   22. M	|   34. X	|   45. )	|
-*	|	1.  1	|   12. C	|   23. N	|   35. Y	|   46. *	|
-*	|	2.  2	|   13. D	|   24. O	|   36. Z	|   47. +	|
-*	|	3.  3	|   14. E	|   25. P	|   37.		|   48. ,	|
-*	|	4.  4	|   15. F	|   26. Q	|   38. !	|   49. -	|
-*	|	5.  5	|   16. G	|   27. R	|   39. #	|   50. .	|
-*	|	6.  6	|   17. H	|   28. S	|   40. $	|   51. /	|
-*	|	7.  7	|   18. I	|   30. T	|   41. %	|			|
-*	|	8.  8	|   19. J	|   31. U	|   42. &	|			|
-*	|	9.  9	|   20. K	|   32. V	|   43. '	|			|
-*	|	10. A	|   21. L	|   33. W	|   44. (	|			|
+*	|	0.  0	|   11. B	|   22. M	|   33. X	|   44. )	|
+*	|	1.  1	|   12. C	|   23. N	|   34. Y	|   45. *	|
+*	|	2.  2	|   13. D	|   24. O	|   35. Z	|   46. +	|
+*	|	3.  3	|   14. E	|   25. P	|   36.		|   47. ,	|
+*	|	4.  4	|   15. F	|   26. Q	|   37. !	|   48. -	|
+*	|	5.  5	|   16. G	|   27. R	|   38. #	|   49. .	|
+*	|	6.  6	|   17. H	|   28. S	|   39. $	|   50. /	|
+*	|	7.  7	|   18. I	|   39. T	|   40. %	|			|
+*	|	8.  8	|   19. J	|   30. U	|   41. &	|			|
+*	|	9.  9	|   20. K	|   31. V	|   42. '	|			|
+*	|	10. A	|   21. L	|   32. W	|   43. (	|			|
 *************************************************************/
 typedef int8_t BLFChar;
+
+/*************************************************************
+* NAME: BL_GFONT_TYPE
+* DATE: 2021 - 08 - 30
+* NOTE: N/A
+*************************************************************/
+enum BL_GFONT_TYPE
+{
+	BL_GFONT_TYPE_WHITE    = 0,
+	BL_GFONT_TYPE_BLACK    = 1,
+	BL_GFONT_TYPE_BURGUNDY = 2,
+	BL_GFONT_TYPE_NAVY     = 3,
+	BL_GFONT_TYPE_TAN      = 4
+};
 
 /*************************************************************
 * NAME: BLVert2i
@@ -274,6 +296,19 @@ BLIndexedTexture BLCreateIndexedTextureVStr(const BLByte* VSTR, BLColor bg, BLCo
 BLFixedTexFont BLCreateFontVStr(const BLByte* VSTR, BLColor bg, BLColor fg);
 
 /*************************************************************
+* NAME: BLCreateTexHandleVStr
+* DATE: 2021 - 08 - 30
+* PARAMS:
+*	const BLByte* VSTR -> VSTR to read from
+*	BLColor bg -> background color
+*	BLColor fg -> foreground color
+* RETURNS:
+*	BLTextureHandle created from VStr
+* NOTE: N/A
+*************************************************************/
+BLTextureHandle BLCreateTexHandleVStr(const BLByte* VSTR, BLColor bg, BLColor fg);
+
+/*************************************************************
 * NAME: BLInitGFont
 * DATE: 2021 - 08 - 30
 * PARAMS:
@@ -298,5 +333,17 @@ int BLInitGFont( );
 *	Frees all GFont memory from both CPU and GPU
 *************************************************************/
 void BLTerminateGFont( );
+
+/*************************************************************
+* NAME: BLGetFontTextureHandle
+* DATE: 2021 - 08 - 30
+* PARAMS:
+*	BLByte character -> ASCII equiv of BTIS character
+* RETURNS:
+*	BLTextureHandle of pre-generated font texture
+* NOTE:
+*	Call BLInitGFont to use this function
+*************************************************************/
+BLTextureHandle BLGetFontTextureHandle(BLByte character, enum BL_GFONT_TYPE fType);
 
 #endif
