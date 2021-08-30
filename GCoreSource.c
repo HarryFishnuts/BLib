@@ -360,8 +360,8 @@ void BLRenderTextureSquare(BLTextureHandle texHndl, float posX, float posY, floa
 
 	glEnd( );
 
-	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_BLEND);
+	glDisable(GL_TEXTURE_2D);
 
 	//end
 	return;
@@ -415,8 +415,8 @@ void BLRenderTextureRect(BLTextureHandle texHndl, BLRect texRect, float scale, f
 	glTexCoord2f(1, 0); glVertex2f( 1 * scaleX, -1 * scaleY);
 
 	glEnd( );
-	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_BLEND);
+	glDisable(GL_TEXTURE_2D);
 
 	//end
 	return;
@@ -467,8 +467,8 @@ void BLRenderTextureQuad(BLTextureHandle texHndl, BLQuad texQuad, float scale, f
 	glTexCoord2f(1, 0); glVertex2f(texQuad.p3.X, texQuad.p3.Y);
 
 	glEnd( );
-	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_BLEND);
+	glDisable(GL_TEXTURE_2D);
 
 	//end
 	return;
