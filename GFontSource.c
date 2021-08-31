@@ -440,7 +440,7 @@ static inline BLFChar BLHelperConvertASCIItoBTIS(BLByte aChar)
 	//conversion
 
 	//number condition
-	if(aIndex > 47 && aIndex < 51) 
+	if(aIndex > 47 && aIndex < 58) 
 	{
 		return (BLFChar)(aIndex - 48);
 	}
