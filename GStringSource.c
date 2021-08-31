@@ -65,9 +65,13 @@ void BLTerminateGString( )
 *************************************************************/
 void BLRenderString(const BLByte* string, enum BL_GFONT_TYPE fType, float X, float Y, float S)
 {
-	//create draw position variables
-	float drawX = X;
-	float drawY = Y;
+	//create quad so that draw position is
+	//not centered, but in fact top left corner
+	const BLVert2f p0 = BLCreateVert2f(0, -1);
+	const BLVert2f p1 = BLCreateVert2f(0,  0);
+	const BLVert2f p2 = BLCreateVert2f(1,  0);
+	const BLVert2f p3 = BLCreateVert2f(1, -1);
+	BLQuad textQuad = BLCreateQuad(X, Y, p0, p1, p2, p3);
 
 	//get string size
 	int sLength = strlen(string);
@@ -86,10 +90,10 @@ void BLRenderString(const BLByte* string, enum BL_GFONT_TYPE fType, float X, flo
 		if(scanChar == '\n')
 		{
 			//reset X position
-			drawX = X;
+			textQuad.X = X;
 
 			//increment drawY
-			drawY -= (S * 2) + (S * BL_GSTRING_NEWLINE_SCALE);
+			textQuad.Y -= S + (S * BL_GSTRING_NEWLINE_SCALE);
 		}
 		else
 		{
@@ -99,10 +103,10 @@ void BLRenderString(const BLByte* string, enum BL_GFONT_TYPE fType, float X, flo
 			charHndl = BLGetFontTextureHandle(scanChar, fType);
 
 			//render texture
-			BLRenderTextureSquare(charHndl, drawX, drawY, S, 0);
+			BLRenderTextureQuad(charHndl, textQuad, S, 0);
 
 			//increment drawX
-			drawX += (S * 2) + (S * BL_GSTRING_SPACING_RATIO);
+			textQuad.X += S + (S * BL_GSTRING_SPACING_RATIO);
 		}
 	}
 	
