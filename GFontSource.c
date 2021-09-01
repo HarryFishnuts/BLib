@@ -451,7 +451,7 @@ static inline BLFChar BLHelperConvertASCIItoBTIS(BLByte aChar)
 	}
 
 	//lowercase condition
-	if(aIndex > 96 && aIndex < 122)
+	if(aIndex > 96 && aIndex < 123)
 	{
 		aIndex -= 32; //convert to uppercase
 	}
