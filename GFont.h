@@ -22,7 +22,7 @@
 
 #define BL_GFONT_MAX_COLOR_INDEX 0xf
 #define BL_GFONT_MAX_VBUF_SIZE 0x80
-#define BL_GFONT_FONT_COUNT 50
+#define BL_GFONT_FONT_COUNT 53
 #define BL_GFONT_FONTSET_COUNT 5
 
 #define BL_GFONT_WHITE    255, 255, 255, 255
@@ -85,6 +85,10 @@
 #define BL_VSTR_PERIOD     "11102120"
 #define BL_VSTR_SLASH      "3433221110"
 
+#define BL_VSTR_QUESTION  "14243433232220"
+#define BL_VSTR_OPEN_JAG  "3423122130"
+#define BL_VSTR_CLOSE_JAG "1423322110"
+
 typedef uint8_t BLCIndex;
 
 /*************************************************************
@@ -98,6 +102,7 @@ typedef uint8_t BLCIndex;
 *		[00 - 09] numerical (0 - 10)
 *		[10 - 35] letters   (A - Z)
 *		[37 - 50] symbols
+*		[51+    ] extra symbols
 *	
 *	NOTE THAT THE SYMBOLS SEQUENCE IN BTIS DIRECTLY MAPS TO
 *	THE VALUES [32 - 47] IN ASCII
@@ -111,9 +116,9 @@ typedef uint8_t BLCIndex;
 *	|	4.  4	|   15. F	|   26. Q	|   37. !	|   48. -	|
 *	|	5.  5	|   16. G	|   27. R	|   38. #	|   49. .	|
 *	|	6.  6	|   17. H	|   28. S	|   39. $	|   50. /	|
-*	|	7.  7	|   18. I	|   39. T	|   40. %	|			|
-*	|	8.  8	|   19. J	|   30. U	|   41. &	|			|
-*	|	9.  9	|   20. K	|   31. V	|   42. '	|			|
+*	|	7.  7	|   18. I	|   39. T	|   40. %	|   51. ?	|
+*	|	8.  8	|   19. J	|   30. U	|   41. &	|   52. <	|
+*	|	9.  9	|   20. K	|   31. V	|   42. '	|   53. >	|
 *	|	10. A	|   21. L	|   32. W	|   43. (	|			|
 *************************************************************/
 typedef int8_t BLFChar;

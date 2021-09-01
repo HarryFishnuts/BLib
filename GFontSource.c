@@ -415,6 +415,11 @@ static inline BLFontSet BLHelperCreateFontSet(BLColor fColor)
 	BLFillTBuf(BL_VSTR_PERIOD    ); // 49
 	BLFillTBuf(BL_VSTR_SLASH     ); // 50
 
+	//extra symbols
+	BLFillTBuf(BL_VSTR_QUESTION ); //51
+	BLFillTBuf(BL_VSTR_OPEN_JAG ); //52
+	BLFillTBuf(BL_VSTR_CLOSE_JAG); //53
+
 	//undefine macro
 	#undef BLFillTBuf
 
@@ -467,6 +472,23 @@ static inline BLFChar BLHelperConvertASCIItoBTIS(BLByte aChar)
 	if (aIndex > 34 && aIndex < 48)
 	{
 		return (BLFChar)(aIndex + 3);
+	}
+
+	//extra symbols
+	switch (aIndex)
+	{
+	case '?':
+		return 51;
+
+	case '<':
+		return 52;
+
+	case '>':
+		return 53;
+
+	default:
+
+		break;
 	}
 
 	//symbol discard (no double quotation in BTIS)
