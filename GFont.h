@@ -88,6 +88,8 @@
 #define BL_VSTR_QUESTION  "14243433232220"
 #define BL_VSTR_OPEN_JAG  "3423122130"
 #define BL_VSTR_CLOSE_JAG "1423322110"
+#define BL_VSTR_COLON     "2321"
+#define BL_VSTR_EQUAL     "132333112131"
 
 typedef uint8_t BLCIndex;
 
@@ -109,7 +111,7 @@ typedef uint8_t BLCIndex;
 * 
 *	ALL BTIS VALUES AND THEIR ASCII COUNTERPARTS IN ORDER:
 * 
-*	|	0.  0	|   11. B	|   22. M	|   33. X	|   44. )	|
+*	|	0.  0	|   11. B	|   22. M	|   33. X	|   44. )	|   55. =	|
 *	|	1.  1	|   12. C	|   23. N	|   34. Y	|   45. *	|
 *	|	2.  2	|   13. D	|   24. O	|   35. Z	|   46. +	|
 *	|	3.  3	|   14. E	|   25. P	|   36.		|   47. ,	|
@@ -119,7 +121,7 @@ typedef uint8_t BLCIndex;
 *	|	7.  7	|   18. I	|   39. T	|   40. %	|   51. ?	|
 *	|	8.  8	|   19. J	|   30. U	|   41. &	|   52. <	|
 *	|	9.  9	|   20. K	|   31. V	|   42. '	|   53. >	|
-*	|	10. A	|   21. L	|   32. W	|   43. (	|			|
+*	|	10. A	|   21. L	|   32. W	|   43. (	|	54. :	|
 *************************************************************/
 typedef int8_t BLFChar;
 
