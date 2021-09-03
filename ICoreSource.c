@@ -157,17 +157,17 @@ BLRecti BLCenterRecti(BLRecti tRect, enum BL_CENTER_TYPE cType)
 	{
 	case BL_CENTER_TYPE_X:
 
-		cRect = BLCreateRecti(centerX, tRect.Y, tRect.W, tRect.H);
+		cRect = BLCreateRecti(rCentX, tRect.Y, tRect.W, tRect.H);
 		return cRect;
 
 	case BL_CENTER_TYPE_Y:
 
-		cRect = BLCreateRecti(tRect.X, centerY, tRect.W, tRect.H);
+		cRect = BLCreateRecti(tRect.X, rCentY, tRect.W, tRect.H);
 		return cRect;
 
 	case BL_CENTER_TYPE_BOTH:
 
-		cRect = BLCreateRecti(centerX, centerY, tRect.W, tRect.H);
+		cRect = BLCreateRecti(rCentX, rCentY, tRect.W, tRect.H);
 		return cRect;
 
 	default:
