@@ -279,6 +279,8 @@ int BLICheckMouseRightDown( );
 * NOTE:
 *	Only includes all numbers and letters
 *	If no key down, return NULL
+*	This should NOT be used for typing! only handling keyboard
+*	inputs
 *************************************************************/
 BLByte BLICheckKeyDownAlphaNumeric( );
 

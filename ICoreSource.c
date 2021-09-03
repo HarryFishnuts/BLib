@@ -780,6 +780,8 @@ int BLICheckMouseRightDown( )
 * NOTE:
 *	Only includes all numbers and letters
 *	If no key down, return NULL
+*	This should NOT be used for typing! only handling keyboard
+*	inputs
 *************************************************************/
 BLByte BLICheckKeyDownAlphaNumeric( )
 {
@@ -801,6 +803,12 @@ BLByte BLICheckKeyDownAlphaNumeric( )
 		{
 			return (BLByte)i;
 		}
+	}
+
+	//check enter key
+	if(GetKeyState(VK_RETURN) < 0)
+	{
+		return (BLByte)'\n';
 	}
 
 	//no key, end
