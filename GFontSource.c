@@ -345,7 +345,7 @@ typedef struct BLFonts
 *	all predifined letters for rendering
 * NOTE: N/A
 *************************************************************/
-static BLFonts* allFonts;
+static BLFonts* allFonts = NULL;
 
 /*************************************************************
 * NAME: BLHelperCreateFontSet
@@ -577,6 +577,9 @@ void BLTerminateGFont()
 			BLDestroyTexHandle(allFonts->fonts[i].fTexList[j]);
 		}
 	}
+
+	//free allfonts
+	free(allFonts);
 
 	//end
 	return;
