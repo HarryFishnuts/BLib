@@ -269,4 +269,17 @@ int BLICheckMouseLeftDown( );
 *************************************************************/
 int BLICheckMouseRightDown( );
 
+/*************************************************************
+* NAME: BLICheckKeyDownAlphaNumeric
+* DATE: 2021 - 09 - 3
+* PARAMS:
+*	none
+* RETURNS:
+*	char, mapping to which key is down (UPPERCASE)
+* NOTE:
+*	Only includes all numbers and letters
+*	If no key down, return NULL
+*************************************************************/
+BLByte BLICheckKeyDownAlphaNumeric( );
+
 #endif

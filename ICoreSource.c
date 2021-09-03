@@ -507,8 +507,6 @@ void BLIRenderStringCentered(const BLByte* str, BLRecti rBounds, BLUInt scale, e
 		}
 	}
 
-	printf("lc : %d\n", lineCount);
-
 	//setup draw position vars
 	BLInt drawX = 0;
 	BLInt drawY = 0;
@@ -770,4 +768,41 @@ int BLICheckMouseRightDown( )
 	}
 
 	return 0;
+}
+
+/*************************************************************
+* NAME: BLICheckKeyDownAlphaNumeric
+* DATE: 2021 - 09 - 3
+* PARAMS:
+*	none
+* RETURNS:
+*	char, mapping to which key is down (UPPERCASE)
+* NOTE:
+*	Only includes all numbers and letters
+*	If no key down, return NULL
+*************************************************************/
+BLByte BLICheckKeyDownAlphaNumeric( )
+{
+	//check all letters
+	//65 - 90 map to A-Z in VK_BUTTONS
+	for(int i = 65; i < 91; i++)
+	{
+		if(GetKeyState(i) < 0)
+		{
+			return (BLByte)i;
+		}
+	}
+
+	//check all numbers
+	//48 - 57 map to 0 - 9 in VK_BUTTONS
+	for(int i = 48; i < 57; i++)
+	{
+		if(GetKeyState(i) < 0)
+		{
+			return (BLByte)i;
+		}
+	}
+
+	//no key, end
+	return NULL;
 }
