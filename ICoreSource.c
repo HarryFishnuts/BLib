@@ -547,6 +547,11 @@ int BLICheckMouseOverlap(BLWindowHandle wHndl, BLRecti rBounds)
 	//get mouse position
 	BLVert2f mousePos = BLWindowGetMousePosition(wHndl);
 
+	//inverse Y
+	int viewPortDimensions[4]; //index 3 is height
+	glGetIntegerv(GL_VIEWPORT, viewPortDimensions);
+	mousePos.Y = viewPortDimensions[3] - mousePos.Y;
+
 	//cast to int
 	BLInt mX = (BLInt)mousePos.X;
 	BLInt mY = (BLInt)mousePos.Y;
@@ -555,7 +560,7 @@ int BLICheckMouseOverlap(BLWindowHandle wHndl, BLRecti rBounds)
 	BLInt lx = rBounds.X;             //left X
 	BLInt rx = rBounds.X + rBounds.W; //right X
 	BLInt by = rBounds.Y;             //bottom Y
-	BLInt ty = rBounds.Y + rBounds.X; //top Y
+	BLInt ty = rBounds.Y + rBounds.H; //top Y
 
 	//check if in bounds
 	if(mX > lx && mX < rx)
