@@ -175,7 +175,8 @@ int BLIRenderStringRect(const BLByte* str, BLRecti rBounds, BLUInt scale, enum B
 * PARAMS:
 *	const BLByte* str -> string to render
 *	BLRecti rBounds -> bounds of the string to render
-*	BLUInt scale -> scale of each letter (in pixels)
+*	BLUInt scale    -> scale of each letter (in pixels)
+*	BLUInt border   -> border (in pixels) 
 *	enum BL_GFONT_TYPE sType -> type of font to render
 * RETURNS:
 *	int, 1 for success, 0 for string out of rect bounds

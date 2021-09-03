@@ -524,3 +524,28 @@ int BLIRenderStringRect(const BLByte* str, BLRecti rBounds, BLUInt scale, enum B
 
 	return 1;
 }
+
+/*************************************************************
+* NAME: BLIRenderStringRectBorder
+* DATE: 2021 - 09 - 2
+* PARAMS:
+*	const BLByte* str -> string to render
+*	BLRecti rBounds -> bounds of the string to render
+*	BLUInt scale    -> scale of each letter (in pixels)
+*	BLUInt border   -> border (in pixels)
+*	enum BL_GFONT_TYPE sType -> type of font to render
+* RETURNS:
+*	int, 1 for success, 0 for string out of rect bounds
+* NOTE: N/A
+*************************************************************/
+int BLIRenderStringRectBorder(const BLByte* str, BLRecti rBounds, BLUInt scale, BLUInt border, enum BL_GFONT_TYPE sType)
+{
+	//inner rect
+	BLRecti iRect = BLCreateRecti(rBounds.X + border, rBounds.Y + border, rBounds.W - (border * 2), rBounds.H - (border * 2));
+
+	//draw text
+	int rVal = BLIRenderStringRect(str, iRect, scale, sType);
+
+	//end
+	return rVal;
+}
