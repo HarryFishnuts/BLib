@@ -22,8 +22,12 @@
 
 #define BL_ICORE_NEWLINE_SCALE     1.5f
 #define BL_ICORE_SPACE_SCALE       1.15f
+
 #define BL_ICORE_WORD_BUF_SIZE     0x40
 #define BL_ICORE_STRING_WORD_COUNT 0x80
+
+#define BL_ICORE_LINE_BUF_SIZE 0x80
+#define BL_ICORE_LINE_COUNT    0x40
 
 /*************************************************************
 * NAME: BL_CENTER_TYPE
@@ -182,6 +186,23 @@ void BLIRenderBoxGradient(BLRecti bounds, BLColor colorRight, BLColor colorLeft)
 * NOTE: N/A
 *************************************************************/
 void BLIRenderString(const BLByte* str, BLUInt tX, BLUInt tY, BLUInt scale, enum BL_GFONT_TYPE sType);
+
+/*************************************************************
+* NAME: BLIRenderStringCentered
+* DATE: 2021 - 09 - 2
+* PARAMS:
+*	const BLByte* str -> string to render
+*	BLRecti rBounds   -> bounds of string
+*	BLUInt scale -> scale of each letter (in pixels)
+*	enum BL_GFONT_TYPE sType -> type of font to render
+* RETURNS:
+*	void
+* NOTE: 
+*	If not newlined properly, string will write outside of bounds
+*	it is expected that the string has been newlined correctly to
+*	fit the bounds
+*************************************************************/
+void BLIRenderStringCentered(const BLByte* str, BLRecti rBounds, BLUInt scale, enum BL_GFONT_TYPE sType);
 
 /*************************************************************
 * NAME: BLIRenderStringRect

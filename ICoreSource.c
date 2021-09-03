@@ -448,6 +448,109 @@ void BLIRenderString(const BLByte* str, BLUInt tX, BLUInt tY, BLUInt scale, enum
 }
 
 /*************************************************************
+* NAME: BLIRenderStringCentered
+* DATE: 2021 - 09 - 2
+* PARAMS:
+*	const BLByte* str -> string to render
+*	BLRecti rBounds   -> bounds of string
+*	BLUInt scale -> scale of each letter (in pixels)
+*	enum BL_GFONT_TYPE sType -> type of font to render
+* RETURNS:
+*	void
+* NOTE:
+*	If not newlined properly, string will write outside of bounds
+*	it is expected that the string has been newlined correctly to
+*	fit the bounds
+*************************************************************/
+void BLIRenderStringCentered(const BLByte* str, BLRecti rBounds, BLUInt scale, enum BL_GFONT_TYPE sType)
+{
+	//get center of rBounds
+	BLInt centerX = rBounds.X + (rBounds.W / 2);
+	BLInt centerY = rBounds.Y + (rBounds.H / 2);
+
+	//get string length
+	int sLen = strlen(str);
+
+	//create newline buffer
+	BLByte nlBuff[BL_ICORE_LINE_COUNT][BL_ICORE_LINE_BUF_SIZE];
+
+	//empty buffer
+	for(int i = 0; i < BL_ICORE_LINE_COUNT; i++)
+	{
+		for(int j = 0; j < BL_ICORE_LINE_BUF_SIZE; j++)
+		{
+			nlBuff[i][j] = (BLByte)NULL;
+		}
+	}
+
+	//break str into newline
+	int lineCount = 0;
+	int lineIndex = 0;
+
+	for(int i = 0; i < sLen; i++)
+	{
+		//check if newline
+		if(str[i] == '\n')
+		{
+			//increment count and reset
+			//line index
+			lineCount++;
+			lineIndex = 0;
+		}
+		else
+		{
+			//write to nlBuf
+			nlBuff[lineCount][lineIndex] = str[i];
+
+			//increment line index
+			lineIndex++;
+		}
+	}
+
+	//increment line count
+	lineCount++;
+
+	//setup draw position vars
+	BLInt drawX = 0;
+	BLInt drawY = 0;
+
+	//set draw Y
+	drawY = centerY + ((lineCount - 1) * (scale * BL_ICORE_NEWLINE_SCALE));
+
+	//render each line
+	for(int i = 0; i < lineCount; i++)
+	{
+		//first, get char count
+		int lineCharCount = strlen(nlBuff[i]) - 1;
+		
+		//get size
+		int lineSize = 0;
+		for(int j = 0; j < lineCharCount; j++)
+		{
+			//check if space char
+			if(nlBuff[i][j] == ' ')
+			{
+				lineSize += scale * BL_ICORE_SPACE_SCALE;
+			}
+			else
+			{
+				lineSize += scale;
+			}
+		}
+
+		//calculate starting position (drawX)
+		drawX = centerX - (lineSize / 2);
+
+		//draw string
+		//remember: BLIRenderString renders from the top left, which i need to eliminate
+		BLIRenderString(nlBuff[i], drawX - (scale / 2), drawY - (scale / 2), scale, sType);
+
+		//newline
+		drawY -= scale * BL_ICORE_NEWLINE_SCALE;
+	}
+}
+
+/*************************************************************
 * NAME: BLIRenderStringRect
 * DATE: 2021 - 09 - 2
 * PARAMS:
