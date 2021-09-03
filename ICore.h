@@ -26,6 +26,19 @@
 #define BL_ICORE_STRING_WORD_COUNT 0x80
 
 /*************************************************************
+* NAME: BL_CENTER_TYPE
+* DATE: 2021 - 08 - 3
+* NOTE: This enum is for the BLCenterRecti function,
+* and specifies which dimensions to center
+*************************************************************/
+enum BL_CENTER_TYPE
+{
+	BL_CENTER_TYPE_X = 0,
+	BL_CENTER_TYPE_Y = 1,
+	BL_CENTER_TYPE_BOTH = 2
+};
+
+/*************************************************************
 * NAME: BLRecti
 * DATE: 2021 - 09 - 2
 * MEMBERS:
@@ -89,6 +102,20 @@ BLRecti BLCreateRecti(BLInt X, BLInt Y, BLInt W, BLInt H);
 *	Returned rectangle is scale from the CENTER
 *************************************************************/
 BLRecti BLScaleRecti(BLRecti tRect, float scale);
+
+/*************************************************************
+* NAME: BLCenterRecti
+* DATE: 2021 - 09 - 3
+* PARAMS:
+*	BLRecti tRect -> rect to center
+*	enum BL_CENTER_TYPE cType -> which dims to center 
+* RETURNS:
+*	centered version of tRect
+* NOTE:
+*	Returned rectangle is now position in the center
+*	of the screen
+*************************************************************/
+BLRecti BLCenterRecti(BLRecti tRect, enum BL_CENTER_TYPE cType);
 
 /*************************************************************
 * NAME: BLIRenderBox

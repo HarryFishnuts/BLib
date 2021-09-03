@@ -125,6 +125,60 @@ BLRecti BLScaleRecti(BLRecti tRect, float scale)
 }
 
 /*************************************************************
+* NAME: BLCenterRecti
+* DATE: 2021 - 09 - 3
+* PARAMS:
+*	BLRecti tRect -> rect to center
+*	enum BL_CENTER_TYPE cType -> which dims to center
+* RETURNS:
+*	centered version of tRect
+* NOTE:
+*	Returned rectangle is now position in the center
+*	of the screen
+*************************************************************/
+BLRecti BLCenterRecti(BLRecti tRect, enum BL_CENTER_TYPE cType)
+{
+	//get viewport dimensions for centering
+	//0 -> X, 1 -> Y, 2 -> width, 3 -> height
+	int viewPortDimensions[4];
+	glGetIntegerv(GL_VIEWPORT, viewPortDimensions);
+
+	//centered rect
+	BLRecti cRect;
+
+	//precalculate centered dimensions
+	BLInt centerX = viewPortDimensions[2] / 2;
+	BLInt centerY = viewPortDimensions[3] / 2;
+	BLInt rCentX = centerX - (tRect.W / 2);
+	BLInt rCentY = centerY - (tRect.H / 2);
+
+	//center cRect
+	switch (cType)
+	{
+	case BL_CENTER_TYPE_X:
+
+		cRect = BLCreateRecti(centerX, tRect.Y, tRect.W, tRect.H);
+		return cRect;
+
+	case BL_CENTER_TYPE_Y:
+
+		cRect = BLCreateRecti(tRect.X, centerY, tRect.W, tRect.H);
+		return cRect;
+
+	case BL_CENTER_TYPE_BOTH:
+
+		cRect = BLCreateRecti(centerX, centerY, tRect.W, tRect.H);
+		return cRect;
+
+	default:
+		break;
+	}
+
+	//end
+	return tRect;
+}
+
+/*************************************************************
 * NAME: BLInitICore
 * DATE: 2021 - 09 - 2
 * PARAMS:
