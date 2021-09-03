@@ -20,10 +20,10 @@
 
 #include "GTexLib.h" // For color related struct
 
-#define BL_GFONT_MAX_COLOR_INDEX 0xf
-#define BL_GFONT_MAX_VBUF_SIZE   128
+#define BL_GFONT_MAX_COLOR_INDEX 0x10
+#define BL_GFONT_MAX_VBUF_SIZE   0x80
 #define BL_GFONT_FONT_COUNT      0x80
-#define BL_GFONT_FONTSET_COUNT   4
+#define BL_GFONT_FONTSET_COUNT   0x10
 
 #define BL_GFONT_WHITE    255, 255, 255, 255
 #define BL_GFONT_BLACK    000, 000, 000, 255
