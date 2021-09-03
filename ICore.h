@@ -11,7 +11,6 @@
 * CONTENTS:
 *	- Includes
 *	- Defs
-*	- Typedefs
 *	- Enums
 *	- Structs
 *	- Functions
@@ -19,6 +18,9 @@
 *************************************************************/
 
 #include "GFont.h"
+
+#define BL_ICORE_NEWLINE_SCALE 1.5f
+#define BL_ICORE_SPACE_SCALE   1.15f
 
 /*************************************************************
 * NAME: BLRecti
@@ -135,5 +137,20 @@ void BLIRenderBoxTextured(BLRecti bounds, BLTextureHandle tHndl);
 * NOTE: N/A
 *************************************************************/
 void BLIRenderBoxGradient(BLRecti bounds, BLColor colorRight, BLColor colorLeft);
+
+/*************************************************************
+* NAME: BLIRenderString
+* DATE: 2021 - 09 - 2
+* PARAMS:
+*	const BLByte* str -> string to render
+*	BLUInt tX -> top left X position
+*	BLUInt tY -> top left Y position
+*	BLUInt scale -> scale of each letter (in pixels)
+*	enum BL_GFONT_TYPE sType -> type of font to render
+* RETURNS:
+*	void
+* NOTE: N/A
+*************************************************************/
+void BLIRenderString(const BLByte* str, BLUInt tX, BLUInt tY, BLUInt scale, enum BL_GFONT_TYPE sType);
 
 #endif

@@ -345,7 +345,7 @@ typedef struct BLFonts
 *	all predifined letters for rendering
 * NOTE: N/A
 *************************************************************/
-static BLFonts* allFonts = NULL;
+static BLFonts* allFonts;
 
 /*************************************************************
 * NAME: BLHelperCreateFontSet
@@ -369,7 +369,7 @@ static inline BLFontSet BLHelperCreateFontSet(BLColor fColor)
 	int counter = 0;
 
 	//define local macro
-	#define BLFillTBuf(vStr) tBuf[counter++] = BLCreateTexHandleVStr(vStr, BLCreateColor(0, 0, 0, 0), fColor)
+	#define BLFillTBuf(vStr) tBuf[counter] = BLCreateTexHandleVStr(vStr, BLCreateColor(0, 0, 0, 0), fColor); counter++;
 	
 	//fill numbers
 	BLFillTBuf(BL_VSTR_ZERO ); // 0
@@ -529,13 +529,20 @@ int BLInitGFont( )
 		return 0;
 	}
 
+	//see if already init
+	if(allFonts != NULL)
+	{
+		fprintf(stderr, "GFont already init!\n");
+		return 0;
+	}
+
 	//init allFonts
 	allFonts = calloc(1, sizeof(BLFonts));
 
 	//check if null
 	if(allFonts == NULL)
 	{
-		fprintf(stderr, "Could NOT generate fonts!\n");
+		fprintf(stderr, "Cannot Init GFonts: memory err\n");
 		return 0;
 	}
 
@@ -571,9 +578,6 @@ void BLTerminateGFont()
 		}
 	}
 
-	//free allFonts
-	free(allFonts);
-
 	//end
 	return;
 }
@@ -592,6 +596,13 @@ BLTextureHandle BLGetFontTextureHandle(BLByte character, enum BL_GFONT_TYPE fTyp
 {
 	//texture handle
 	BLTextureHandle texHndl;
+
+	//check if null
+	if(allFonts == NULL)
+	{
+		fprintf(stderr, "allfont was null!\n");
+		return NULL;
+	}
 
 	//switch based on fType
 	switch (fType)
@@ -622,4 +633,25 @@ BLTextureHandle BLGetFontTextureHandle(BLByte character, enum BL_GFONT_TYPE fTyp
 	}
 
 	return NULL;
+}
+
+/*************************************************************
+* NAME: BLPrintAllFontsTextureHandles
+* DATE: 2021 - 09 - 2
+* PARAMS:
+*	void
+* RETURNS:
+*	void
+* NOTE:
+*	Prints out all texture handles
+*************************************************************/
+void BLPrintAllFontsTextureHandles( )
+{
+	for(int i = 0; i < BL_GFONT_FONTSET_COUNT; i++)
+	{
+		for(int j = 0; j < BL_GFONT_FONT_COUNT; j++)
+		{
+			printf("FONTSET: %d\tFONTNUM: %d\tHANDLE: %d\n", i, j, allFonts->fonts[i].fTexList[j]);
+		}
+	}
 }

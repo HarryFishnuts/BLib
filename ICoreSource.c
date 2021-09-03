@@ -50,6 +50,27 @@ static inline void BLHelperSetupProjectionMatrix()
 }
 
 /*************************************************************
+* NAME: BLHelperSetupTexEnv
+* DATE: 2021 - 09 - 2
+* PARAMS:
+*	BLTextureHandle texHandle -> texture handle to setup
+* RETURNS:
+*	void
+* NOTE:
+*	FILE SPECIFIC FUNCTION
+*	Call this function before a render pass to set up the
+*	texture environment
+*************************************************************/
+static inline void BLHelperSetupTexEnv(BLTextureHandle texHandle)
+{
+	glShadeModel(GL_FLAT);
+	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+	glBindTexture(GL_TEXTURE_2D, (GLuint)texHandle);
+	glEnable(GL_TEXTURE_2D);
+	return;
+}
+
+/*************************************************************
 * NAME: BLCreateRecti
 * DATE: 2021 - 09 - 2
 * PARAMS:
@@ -244,7 +265,10 @@ void BLIRenderBoxOutlined(BLRecti bounds, BLColor bColor, BLUInt oSize, BLColor 
 void BLIRenderBoxTextured(BLRecti bounds, BLTextureHandle tHndl)
 {
 	//set up projection matrix to match up with screenspace
-	BLHelperSetupProjectionMatrix();
+	BLHelperSetupProjectionMatrix( );
+
+	//bind texture
+	BLHelperSetupTexEnv(tHndl);
 
 	//load modelview and reset matrix
 	glMatrixMode(GL_MODELVIEW);
@@ -265,9 +289,9 @@ void BLIRenderBoxTextured(BLRecti bounds, BLTextureHandle tHndl)
 	glBegin(GL_QUADS);
 
 	glTexCoord2f(0.0, 0.0); glVertex2f(bX, bY);
-	glTexCoord2f(0.0, 1.0); glVertex2f(tX, bY);
+	glTexCoord2f(0.0, 1.0); glVertex2f(bX, tY);
 	glTexCoord2f(1.0, 1.0); glVertex2f(tX, tY);
-	glTexCoord2f(1.0, 0.0); glVertex2f(bX, tY);
+	glTexCoord2f(1.0, 0.0); glVertex2f(tX, bY);
 
 	glEnd();
 
@@ -293,7 +317,7 @@ void BLIRenderBoxTextured(BLRecti bounds, BLTextureHandle tHndl)
 void BLIRenderBoxGradient(BLRecti bounds, BLColor colorRight, BLColor colorLeft)
 {
 	//set up projection matrix to match up with screenspace
-	BLHelperSetupProjectionMatrix();
+	BLHelperSetupProjectionMatrix( );
 
 	//load modelview and reset matrix
 	glMatrixMode(GL_MODELVIEW);
@@ -333,6 +357,55 @@ void BLIRenderBoxGradient(BLRecti bounds, BLColor colorRight, BLColor colorLeft)
 	glEnd();
 
 	glDisable(GL_BLEND);
+
+	//end
+	return;
+}
+
+/*************************************************************
+* NAME: BLIRenderString
+* DATE: 2021 - 09 - 2
+* PARAMS:
+*	const BLByte* str -> string to render
+*	BLUInt tX -> top left X position
+*	BLUInt tY -> top left Y position
+*	BLUInt scale -> scale of each letter (in pixels)
+*	enum BL_GFONT_TYPE sType -> type of font to render
+* RETURNS:
+*	void
+* NOTE: N/A
+*************************************************************/
+void BLIRenderString(const BLByte* str, BLUInt tX, BLUInt tY, BLUInt scale, enum BL_GFONT_TYPE sType)
+{
+	//get length
+	const int sLen = strlen(str);
+
+	//rect dims for drawing
+	BLRecti drawRect = BLCreateRecti(tX - scale, tY - scale, scale, scale);
+
+	//tex handle
+	BLTextureHandle cHndl;
+
+	//render loop
+	for(int i = 0; i < sLen; i++)
+	{
+		//check for newline
+		if(str[i] == '\n')
+		{
+			//reset x and increment Y
+			drawRect.X = tX - scale;
+			drawRect.Y = drawRect.Y - (BLUInt)((float)scale * BL_ICORE_NEWLINE_SCALE);
+		}
+		else
+		{
+			//draw rect
+			cHndl = BLGetFontTextureHandle(str[i], sType);
+			BLIRenderBoxTextured(drawRect, cHndl);
+
+			//increment x
+			drawRect.X = drawRect.X + (BLUInt)((float)scale * BL_ICORE_SPACE_SCALE);
+		}
+	}
 
 	//end
 	return;

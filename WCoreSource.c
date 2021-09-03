@@ -67,8 +67,20 @@ void BLInitWCore( )
 	//init GLFW
 	glfwInit( );
 
+	//check if already init
+	if(windowList != NULL)
+	{
+		fprintf(stderr, "WCore was already init!\n");
+	}
+
 	//initialize windowList
 	windowList = calloc(1, sizeof(BLWindowList));
+
+	//check if null
+	if(windowList == NULL)
+	{
+		fprintf(stderr, "Windowlist failed to init!\n");
+	}
 
 	//end
 	return;

@@ -21,9 +21,9 @@
 #include "GTexLib.h" // For color related struct
 
 #define BL_GFONT_MAX_COLOR_INDEX 0xf
-#define BL_GFONT_MAX_VBUF_SIZE   0x80
-#define BL_GFONT_FONT_COUNT      0x40
-#define BL_GFONT_FONTSET_COUNT   5
+#define BL_GFONT_MAX_VBUF_SIZE   128
+#define BL_GFONT_FONT_COUNT      0x80
+#define BL_GFONT_FONTSET_COUNT   4
 
 #define BL_GFONT_WHITE    255, 255, 255, 255
 #define BL_GFONT_BLACK    000, 000, 000, 255
@@ -352,5 +352,17 @@ void BLTerminateGFont( );
 *	Call BLInitGFont to use this function
 *************************************************************/
 BLTextureHandle BLGetFontTextureHandle(BLByte character, enum BL_GFONT_TYPE fType);
+
+/*************************************************************
+* NAME: BLPrintAllFontsTextureHandles
+* DATE: 2021 - 09 - 2
+* PARAMS:
+*	void
+* RETURNS:
+*	void
+* NOTE:
+*	Prints out all texture handles
+*************************************************************/
+void BLPrintAllFontsTextureHandles( );
 
 #endif
