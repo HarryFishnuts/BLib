@@ -507,18 +507,17 @@ void BLIRenderStringCentered(const BLByte* str, BLRecti rBounds, BLUInt scale, e
 		}
 	}
 
-	//increment line count
-	lineCount++;
+	printf("lc : %d\n", lineCount);
 
 	//setup draw position vars
 	BLInt drawX = 0;
 	BLInt drawY = 0;
 
 	//set draw Y
-	drawY = centerY + ((lineCount - 1) * (scale * BL_ICORE_NEWLINE_SCALE));
+	drawY = centerY + ((lineCount * (scale * BL_ICORE_NEWLINE_SCALE)) / 2);
 
 	//render each line
-	for(int i = 0; i < lineCount; i++)
+	for(int i = 0; i < lineCount + 1; i++)
 	{
 		//first, get char count
 		int lineCharCount = strlen(nlBuff[i]) - 1;
@@ -543,7 +542,7 @@ void BLIRenderStringCentered(const BLByte* str, BLRecti rBounds, BLUInt scale, e
 
 		//draw string
 		//remember: BLIRenderString renders from the top left, which i need to eliminate
-		BLIRenderString(nlBuff[i], drawX - (scale / 2), drawY - (scale / 2), scale, sType);
+		BLIRenderString(nlBuff[i], drawX, drawY + (scale / 2), scale, sType);
 
 		//newline
 		drawY -= scale * BL_ICORE_NEWLINE_SCALE;
