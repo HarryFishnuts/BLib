@@ -34,10 +34,10 @@
 *************************************************************/
 typedef struct BLRecti
 {
-	BLUInt X;
-	BLUInt Y;
-	BLUInt W;
-	BLUInt H;
+	BLInt X;
+	BLInt Y;
+	BLInt W;
+	BLInt H;
 }BLRecti;
 
 /*************************************************************
@@ -66,15 +66,15 @@ void BLTerminateICore( );
 * NAME: BLCreateRecti
 * DATE: 2021 - 09 - 2
 * PARAMS:
-*	BLUInt X -> screenspace X
-*	BLUInt Y -> screenspace Y
-*	BLUInt W -> width (pixels)
-*	BLUInt H -> height (pixels)
+*	BLInt X -> screenspace X
+*	BLInt Y -> screenspace Y
+*	BLInt W -> width (pixels)
+*	BLInt H -> height (pixels)
 * RETURNS:
 *	BLRecti created from params
 * NOTE: N/A
 *************************************************************/
-BLRecti BLCreateRecti(BLUInt X, BLUInt Y, BLUInt W, BLUInt H);
+BLRecti BLCreateRecti(BLInt X, BLInt Y, BLInt W, BLInt H);
 
 /*************************************************************
 * NAME: BLScaleRecti

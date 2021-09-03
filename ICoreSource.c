@@ -74,15 +74,15 @@ static inline void BLHelperSetupTexEnv(BLTextureHandle texHandle)
 * NAME: BLCreateRecti
 * DATE: 2021 - 09 - 2
 * PARAMS:
-*	BLUInt X -> screenspace X
-*	BLUInt Y -> screenspace Y
-*	BLUInt W -> width (pixels)
-*	BLUInt H -> height (pixels)
+*	BLInt X -> screenspace X
+*	BLInt Y -> screenspace Y
+*	BLInt W -> width (pixels)
+*	BLInt H -> height (pixels)
 * RETURNS:
 *	BLRecti created from params
 * NOTE: N/A
 *************************************************************/
-BLRecti BLCreateRecti(BLUInt X, BLUInt Y, BLUInt W, BLUInt H)
+BLRecti BLCreateRecti(BLInt X, BLInt Y, BLInt W, BLInt H)
 {
 	BLRecti rect = { X, Y, W, H };
 	return rect;
@@ -118,28 +118,8 @@ BLRecti BLScaleRecti(BLRecti tRect, float scale)
 	int viewPortDimensions[4];
 	glGetIntegerv(GL_VIEWPORT, viewPortDimensions);
 
-	//clamp low
-	if(newX < 0)
-	{
-		newX = 0;
-	}
-	if(newY < 0)
-	{
-		newY = 0;
-	}
-
-	//clamp high
-	if(newX + scaledW > (float)viewPortDimensions[2])
-	{
-		scaledW = (float)viewPortDimensions[2];
-	}
-	if(newY + scaledH > (float)viewPortDimensions[3])
-	{
-		scaledH = (float)viewPortDimensions[3];
-	}
-
 	//end
-	return BLCreateRecti((BLUInt)newX, (BLUInt)newY, (BLUInt)scaledW, (BLUInt)scaledH);
+	return BLCreateRecti((BLInt)newX, (BLInt)newY, (BLInt)scaledW, (BLInt)scaledH);
 }
 
 /*************************************************************
