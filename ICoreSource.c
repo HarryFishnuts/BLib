@@ -410,3 +410,117 @@ void BLIRenderString(const BLByte* str, BLUInt tX, BLUInt tY, BLUInt scale, enum
 	//end
 	return;
 }
+
+/*************************************************************
+* NAME: BLIRenderStringRect
+* DATE: 2021 - 09 - 2
+* PARAMS:
+*	const BLByte* str -> string to render
+*	BLRecti rBounds -> bounds of the string to render
+*	BLUInt scale -> scale of each letter (in pixels)
+*	enum BL_GFONT_TYPE sType -> type of font to render
+* RETURNS:
+*	int, 1 for success, 0 for string out of rect bounds
+* NOTE: N/A
+*************************************************************/
+int BLIRenderStringRect(const BLByte* str, BLRecti rBounds, BLUInt scale, enum BL_GFONT_TYPE sType)
+{
+	//get string length
+	const int sLen = strlen(str);
+
+	//create buffer for word seperation
+	char wBuf[BL_ICORE_STRING_WORD_COUNT][BL_ICORE_WORD_BUF_SIZE];
+
+	//zero memory
+	for(int i = 0; i < BL_ICORE_STRING_WORD_COUNT; i++)
+	{
+		for(int j = 0; j < BL_ICORE_WORD_BUF_SIZE; j++)
+		{
+			wBuf[i][j] = (char)NULL;
+		}
+	}
+
+	//word counter and index
+	int wCount = 0;
+	int wIndex = 0;
+
+	//break string into words
+	for(int i = 0; i < sLen; i++)
+	{
+		if(str[i] == ' ')
+		{
+			//keep space
+			wBuf[wCount][wIndex] = ' ';
+
+			//increment and reset
+			wCount++;
+			wIndex = 0;
+		}
+		else
+		{
+			wBuf[wCount][wIndex] = str[i];
+			wIndex++;
+		}
+	}
+
+	//increment word count
+	wCount++;
+
+	//create rect for drawing
+	BLRecti drawrect = BLCreateRecti(rBounds.X, rBounds.Y + rBounds.H - scale, scale, scale);
+
+	//loop through every word
+	for(int i = 0; i < wCount; i++)
+	{
+		//check if word is too big
+		if(drawrect.X + (strlen(wBuf[i]) * scale) > rBounds.X + rBounds.W)
+		{
+			//newline
+			drawrect.Y -= scale * BL_ICORE_NEWLINE_SCALE;
+
+			//reset X
+			drawrect.X = rBounds.X;
+
+			//check if newline is too far
+			if(drawrect.Y < rBounds.Y)
+			{
+				//end
+				return 0;
+			}
+		}
+		
+		//create tex handle
+		BLTextureHandle cHndl;
+
+		//render loop
+		for (int j = 0; j < strlen(wBuf[i]); j++)
+		{
+
+			//check for newline
+			if (wBuf[i][j] == '\n')
+			{
+				//reset x and increment Y
+				drawrect.X = rBounds.X;
+				drawrect.Y = drawrect.Y - (BLUInt)((float)scale * BL_ICORE_NEWLINE_SCALE);
+
+				//check if newline is too far
+				if (drawrect.Y < rBounds.Y)
+				{
+					//end
+					return 0;
+				}
+			}
+			else
+			{
+				//draw rect
+				cHndl = BLGetFontTextureHandle(wBuf[i][j], sType);
+				BLIRenderBoxTextured(drawrect, cHndl);
+
+				//increment x
+				drawrect.X = drawrect.X + (BLUInt)((float)scale * BL_ICORE_SPACE_SCALE);
+			}
+		}
+	}
+
+	return 1;
+}

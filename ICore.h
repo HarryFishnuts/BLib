@@ -19,8 +19,10 @@
 
 #include "GFont.h"
 
-#define BL_ICORE_NEWLINE_SCALE 1.5f
-#define BL_ICORE_SPACE_SCALE   1.15f
+#define BL_ICORE_NEWLINE_SCALE     1.5f
+#define BL_ICORE_SPACE_SCALE       1.15f
+#define BL_ICORE_WORD_BUF_SIZE     0x40
+#define BL_ICORE_STRING_WORD_COUNT 0x80
 
 /*************************************************************
 * NAME: BLRecti
@@ -152,5 +154,33 @@ void BLIRenderBoxGradient(BLRecti bounds, BLColor colorRight, BLColor colorLeft)
 * NOTE: N/A
 *************************************************************/
 void BLIRenderString(const BLByte* str, BLUInt tX, BLUInt tY, BLUInt scale, enum BL_GFONT_TYPE sType);
+
+/*************************************************************
+* NAME: BLIRenderStringRect
+* DATE: 2021 - 09 - 2
+* PARAMS:
+*	const BLByte* str -> string to render
+*	BLRecti rBounds -> bounds of the string to render
+*	BLUInt scale -> scale of each letter (in pixels)
+*	enum BL_GFONT_TYPE sType -> type of font to render
+* RETURNS:
+*	int, 1 for success, 0 for string out of rect bounds
+* NOTE: N/A
+*************************************************************/
+int BLIRenderStringRect(const BLByte* str, BLRecti rBounds, BLUInt scale, enum BL_GFONT_TYPE sType);
+
+/*************************************************************
+* NAME: BLIRenderStringRectBorder
+* DATE: 2021 - 09 - 2
+* PARAMS:
+*	const BLByte* str -> string to render
+*	BLRecti rBounds -> bounds of the string to render
+*	BLUInt scale -> scale of each letter (in pixels)
+*	enum BL_GFONT_TYPE sType -> type of font to render
+* RETURNS:
+*	int, 1 for success, 0 for string out of rect bounds
+* NOTE: N/A
+*************************************************************/
+int BLIRenderStringRectBorder(const BLByte* str, BLRecti rBounds, BLUInt scale, BLUInt border, enum BL_GFONT_TYPE sType);
 
 #endif
