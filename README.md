@@ -11,7 +11,7 @@ making a rendering helper library yourself
 Okay, I lied, there are C++ style comments, and not everything I do is
 in classic C convention, but I think that clarity is important above all
 else, and C++ just doesn't offer that kind of thing. It's also why you
-see mee comment so much
+see me comment so much
 
 <h2> Important: </h2>
 BLib is not in a functional state right now, i'd recommend using GLFW
