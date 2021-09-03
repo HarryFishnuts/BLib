@@ -224,4 +224,14 @@ void BLWindowUpdate( );
 *************************************************************/
 void BLWindowSwapBuffers(BLWindowHandle winHndl);
 
+/*************************************************************
+* NAME: BLWindowGetMousePosition
+* DATE: 2021 - 09 - 3
+* PARAMS:
+*	BLWindowHandle winHndl -> window to get mouse position
+* RETURNS: void
+* NOTE: N/A
+*************************************************************/
+BLVert2f BLWindowGetMousePosition(BLWindowHandle winHndl);
+
 #endif

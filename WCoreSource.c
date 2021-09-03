@@ -15,8 +15,6 @@
 *
 *************************************************************/
 
-#include "WCore.h"   // Header
-
 #include <stdio.h>   // I/O
 #include <stdlib.h>  // For memory management
 
@@ -24,6 +22,8 @@
 
 #include <Windows.h> // OpenGL dependancy
 #include <gl/GL.h>   // Viewport related functions
+
+#include "WCore.h"   // Header
 
 /*************************************************************
 * NAME: BLWindowList
@@ -433,4 +433,25 @@ void BLWindowSwapBuffers(BLWindowHandle winHndl)
 
 	//end
 	return;
+}
+
+/*************************************************************
+* NAME: BLWindowGetMousePosition
+* DATE: 2021 - 09 - 3
+* PARAMS:
+*	BLWindowHandle winHndl -> window to get mouse position
+* RETURNS: void
+* NOTE: N/A
+*************************************************************/
+BLVert2f BLWindowGetMousePosition(BLWindowHandle winHndl)
+{
+	//aux vars
+	double posX;
+	double posY;
+
+	//get position
+	glfwGetCursorPos(windowList->glWinArr[winHndl], &posX, &posY);
+
+	//cast to float and end
+	return BLCreateVert2f((float)posX, (float)posY);
 }

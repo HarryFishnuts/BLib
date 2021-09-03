@@ -13,11 +13,13 @@
 *
 *************************************************************/
 
-#include "ICore.h"   // Header
 #include <stdio.h>   // I/O
 #include <Windows.h> // OpenGL dependancy
+#include <WinUser.h> // Mouse input
 #include <gl/GL.h>   // For rendering
 #include <gl/GLU.h>  // For projection related functions
+
+#include "ICore.h"   // Header
 
 /*************************************************************
 * NAME: BLHelperSetupProjectionMatrix
@@ -31,7 +33,7 @@
 *	This function sets up the projection matrix based on the
 *	viewport dimensions
 *************************************************************/
-static inline void BLHelperSetupProjectionMatrix()
+static inline void BLHelperSetupProjectionMatrix( )
 {
 	//var to get viewport dimensions
 	//0 -> X, 1 -> Y, 2 -> width, 3 -> height
@@ -528,4 +530,83 @@ int BLIRenderStringRectBorder(const BLByte* str, BLRecti rBounds, BLUInt scale, 
 
 	//end
 	return rVal;
+}
+
+/*************************************************************
+* NAME: BLICheckMouseOverlap
+* DATE: 2021 - 09 - 3
+* PARAMS:
+*	BLWindowHandle wHndl -> window to check
+*	BLRecti rBounds      -> bounds to check
+* RETURNS:
+*	int, 1 for in bounds, 0 for out of bounds
+* NOTE: N/A
+*************************************************************/
+int BLICheckMouseOverlap(BLWindowHandle wHndl, BLRecti rBounds)
+{
+	//get mouse position
+	BLVert2f mousePos = BLWindowGetMousePosition(wHndl);
+
+	//cast to int
+	BLInt mX = (BLInt)mousePos.X;
+	BLInt mY = (BLInt)mousePos.Y;
+
+	//get bounds
+	BLInt lx = rBounds.X;             //left X
+	BLInt rx = rBounds.X + rBounds.W; //right X
+	BLInt by = rBounds.Y;             //bottom Y
+	BLInt ty = rBounds.Y + rBounds.X; //top Y
+
+	//check if in bounds
+	if(mX > lx && mX < rx)
+	{
+		if(mY > by && mY < ty)
+		{
+			//end
+			return 1;
+		}
+	}
+
+	//fail
+	return 0;
+}
+
+/*************************************************************
+* NAME: BLICheckMouseLeftDown
+* DATE: 2021 - 09 - 3
+* PARAMS:
+*	none
+* RETURNS:
+*	int, 1 for mouse down, 0 for mouse up
+* NOTE:
+*	Checks if left mouse button is down
+*************************************************************/
+int BLICheckMouseLeftDown( )
+{
+	if(GetKeyState(VK_LBUTTON) < 0)
+	{
+		return 1;
+	}
+
+	return 0;
+}
+
+/*************************************************************
+* NAME: BLICheckMouseRightDown
+* DATE: 2021 - 09 - 3
+* PARAMS:
+*	none
+* RETURNS:
+*	int, 1 for mouse down, 0 for mouse up
+* NOTE:
+*	Checks if right mouse button is down
+*************************************************************/
+int BLICheckMouseRightDown( )
+{
+	if (GetKeyState(VK_RBUTTON) < 0)
+	{
+		return 1;
+	}
+
+	return 0;
 }

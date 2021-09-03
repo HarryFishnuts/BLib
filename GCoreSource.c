@@ -14,7 +14,6 @@
 *
 *************************************************************/
 
-#include "GCore.h" // Header
 
 #include <stdio.h>  // For I/O
 #include <stdlib.h> // For memory management
@@ -22,6 +21,8 @@
 #include <Windows.h> // OpenGL dependency
 #include <gl/GL.h>   // Graphics library
 #include <gl/GLU.h>  // Projection related functions
+
+#include "GCore.h" // Header
 
 /*************************************************************
 * NAME: BLHelperSetupTexEnv

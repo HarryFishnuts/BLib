@@ -16,12 +16,13 @@
 *
 *************************************************************/
 
-#include "GFont.h"  // Header
 
 #include <stdio.h>  // I/O
 #include <stdlib.h> // Memory management
 #include <string.h> // For string parsing
 #include <glfw3.h>  // For making sure a window context exists
+
+#include "GFont.h"  // Header
 
 /*************************************************************
 * NAME: BLCreateIndexedTexture

@@ -18,6 +18,7 @@
 *************************************************************/
 
 #include "GFont.h"
+#include "WCore.h"
 
 #define BL_ICORE_NEWLINE_SCALE     1.5f
 #define BL_ICORE_SPACE_SCALE       1.15f
@@ -183,5 +184,41 @@ int BLIRenderStringRect(const BLByte* str, BLRecti rBounds, BLUInt scale, enum B
 * NOTE: N/A
 *************************************************************/
 int BLIRenderStringRectBorder(const BLByte* str, BLRecti rBounds, BLUInt scale, BLUInt border, enum BL_GFONT_TYPE sType);
+
+/*************************************************************
+* NAME: BLICheckMouseOverlap
+* DATE: 2021 - 09 - 3
+* PARAMS:
+*	BLWindowHandle wHndl -> window to check
+*	BLRecti rBounds      -> bounds to check
+* RETURNS:
+*	int, 1 for in bounds, 0 for out of bounds
+* NOTE: N/A
+*************************************************************/
+int BLICheckMouseOverlap(BLWindowHandle wHndl, BLRecti rBounds);
+
+/*************************************************************
+* NAME: BLICheckMouseLeftDown
+* DATE: 2021 - 09 - 3
+* PARAMS:
+*	none
+* RETURNS:
+*	int, 1 for mouse down, 0 for mouse up
+* NOTE: 
+*	Checks if left mouse button is down
+*************************************************************/
+int BLICheckMouseLeftDown( );
+
+/*************************************************************
+* NAME: BLICheckMouseRightDown
+* DATE: 2021 - 09 - 3
+* PARAMS:
+*	none
+* RETURNS:
+*	int, 1 for mouse down, 0 for mouse up
+* NOTE:
+*	Checks if right mouse button is down
+*************************************************************/
+int BLICheckMouseRightDown( );
 
 #endif
