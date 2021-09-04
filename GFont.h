@@ -90,6 +90,10 @@
 #define BL_VSTR_CLOSE_JAG "1423322110"
 #define BL_VSTR_COLON     "2321"
 #define BL_VSTR_EQUAL     "132333112131"
+#define BL_VSTR_SEMICOLON "232120"
+#define BL_VSTR_QUOTE     "14133433"
+#define BL_VSTR_OPEN_BOX  "24141312111020"
+#define BL_VSTR_CLOSE_BOX "24343332313020"
 
 typedef uint8_t BLCIndex;
 
@@ -112,10 +116,10 @@ typedef uint8_t BLCIndex;
 *	ALL BTIS VALUES AND THEIR ASCII COUNTERPARTS IN ORDER:
 * 
 *	|	0.  0	|   11. B	|   22. M	|   33. X	|   44. )	|   55. =	|
-*	|	1.  1	|   12. C	|   23. N	|   34. Y	|   45. *	|
-*	|	2.  2	|   13. D	|   24. O	|   35. Z	|   46. +	|
-*	|	3.  3	|   14. E	|   25. P	|   36.		|   47. ,	|
-*	|	4.  4	|   15. F	|   26. Q	|   37. !	|   48. -	|
+*	|	1.  1	|   12. C	|   23. N	|   34. Y	|   45. *	|	56. ;	|
+*	|	2.  2	|   13. D	|   24. O	|   35. Z	|   46. +	|	57. "	|
+*	|	3.  3	|   14. E	|   25. P	|   36.		|   47. ,	|	58. [	|
+*	|	4.  4	|   15. F	|   26. Q	|   37. !	|   48. -	|	59. ]	|
 *	|	5.  5	|   16. G	|   27. R	|   38. #	|   49. .	|
 *	|	6.  6	|   17. H	|   28. S	|   39. $	|   50. /	|
 *	|	7.  7	|   18. I	|   39. T	|   40. %	|   51. ?	|

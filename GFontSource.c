@@ -422,6 +422,10 @@ static inline BLFontSet BLHelperCreateFontSet(BLColor fColor)
 	BLFillTBuf(BL_VSTR_CLOSE_JAG); //53
 	BLFillTBuf(BL_VSTR_COLON    ); //54
 	BLFillTBuf(BL_VSTR_EQUAL    ); //55
+	BLFillTBuf(BL_VSTR_SEMICOLON); //56
+	BLFillTBuf(BL_VSTR_QUOTE    ); //57
+	BLFillTBuf(BL_VSTR_OPEN_BOX ); //58
+	BLFillTBuf(BL_VSTR_CLOSE_BOX); //59
 
 	//undefine macro
 	#undef BLFillTBuf
@@ -494,6 +498,18 @@ static inline BLFChar BLHelperConvertASCIItoBTIS(BLByte aChar)
 
 	case '=':
 		return 55;
+
+	case ';':
+		return 56;
+
+	case '"':
+		return 57;
+
+	case '[':
+		return 58;
+
+	case ']':
+		return 59;
 
 	default:
 

@@ -879,7 +879,7 @@ BLByte BLIGetCharDown()
 	//check all numbers
 	//48 - 57 map to 0 - 9 in VK_BUTTONS
 	BLByte cNum = NULL;
-	for (int i = 48; i < 57; i++)
+	for (int i = 48; i < 58; i++)
 	{
 		if (GetKeyState(i) < 0)
 		{
