@@ -284,4 +284,19 @@ int BLICheckMouseRightDown( );
 *************************************************************/
 BLByte BLICheckKeyDownAlphaNumeric( );
 
+/*************************************************************
+* NAME: BLICheckKeyPushedAlphaNumeric
+* DATE: 2021 - 09 - 3
+* PARAMS:
+*	none
+* RETURNS:
+*	char, mapping to which key is newly pushed down (UPPERCASE)
+* NOTE:
+*	Only includes all numbers and letters
+*	If no key down, return NULL
+*	This function returns a NEWLY pressed down key. This function
+*	is meant for typing related events!
+*************************************************************/
+BLByte BLICheckKeyPushedAlphaNumeric( );
+
 #endif

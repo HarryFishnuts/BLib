@@ -521,7 +521,7 @@ void BLIRenderStringCentered(const BLByte* str, BLRecti rBounds, BLUInt scale, e
 		int lineCharCount = strlen(nlBuff[i]) - 1;
 		
 		//get size
-		int lineSize = 0;
+		int lineSize = scale * 1.5;
 		for(int j = 0; j < lineCharCount; j++)
 		{
 			//check if space char
@@ -811,6 +811,44 @@ BLByte BLICheckKeyDownAlphaNumeric( )
 		return (BLByte)'\n';
 	}
 
+	//check space key
+	if(GetKeyState(VK_SPACE) < 0)
+	{
+		return (BLByte)' ';
+	}
+
 	//no key, end
 	return NULL;
+}
+
+/*************************************************************
+* NAME: BLICheckKeyPushedAlphaNumeric
+* DATE: 2021 - 09 - 3
+* PARAMS:
+*	none
+* RETURNS:
+*	char, mapping to which key is newly pushed down (UPPERCASE)
+* NOTE:
+*	Only includes all numbers and letters
+*	If no key down, return NULL
+*	This function returns a NEWLY pressed down key. This function
+*	is meant for typing related events!
+*************************************************************/
+static BLByte lastPressed = NULL;
+BLByte BLICheckKeyPushedAlphaNumeric( )
+{
+	//get current key down
+	BLByte currentPressed = BLICheckKeyDownAlphaNumeric( );
+
+	//if key down is the same as last time, returns NULL
+	if(currentPressed == lastPressed)
+	{
+		return NULL;
+	}
+	else
+	{
+		//else, return new key down, update last pressed
+		lastPressed = currentPressed;
+		return currentPressed;
+	}
 }
