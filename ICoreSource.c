@@ -852,3 +852,196 @@ BLByte BLICheckKeyPushedAlphaNumeric( )
 		return currentPressed;
 	}
 }
+
+/*************************************************************
+* NAME: BLIGetNextChar
+* DATE: 2021 - 09 - 3
+* PARAMS:
+*	none
+* RETURNS:
+*	char, mapping to which key is pushed down (UPPERCASE)
+* NOTE:
+*	This function covers ALL CHARS, however, it is not recommended
+*	for typing related purposes, rather, input purposes
+*************************************************************/
+BLByte BLIGetCharDown()
+{
+	//check all letters
+	//65 - 90 map to A-Z in VK_BUTTONS
+	for (int i = 65; i < 91; i++)
+	{
+		if (GetKeyState(i) < 0)
+		{
+			return (BLByte)i;
+		}
+	}
+
+	//check all numbers
+	//48 - 57 map to 0 - 9 in VK_BUTTONS
+	BLByte cNum = NULL;
+	for (int i = 48; i < 57; i++)
+	{
+		if (GetKeyState(i) < 0)
+		{
+			cNum = (BLByte)i;
+		}
+	}
+
+	//check if shifted
+	int isShifted = GetKeyState(VK_SHIFT);
+
+	//check all number special characters
+	if(isShifted && cNum != NULL)
+	{
+		switch (cNum)
+		{
+		case '1':
+			return '!';
+
+		case '2':
+			return '@';
+
+		case '3':
+			return '#';
+
+		case '4':
+			return '$';
+
+		case '5':
+			return '%';
+
+		case '6':
+			return '^';
+
+		case '7':
+			return '&';
+
+		case '8':
+			return '*';
+
+		case '9':
+			return '(';
+
+		case '0':
+			return ')';
+
+		default:
+			break;
+		}
+	}
+
+	//if number
+	if(cNum != NULL)
+	{
+		return cNum;
+	}
+
+	//other special characters
+	BLByte specChar = NULL;
+	if(GetKeyState(VK_OEM_PLUS))
+	{
+		specChar = '=';
+	}
+	if(GetKeyState(VK_OEM_MINUS))
+	{
+		specChar = '-';
+	}
+	if (GetKeyState(VK_OEM_COMMA))
+	{
+		specChar = ',';
+	}
+	if (GetKeyState(VK_OEM_PERIOD))
+	{
+		specChar = '.';
+	}
+	if (GetKeyState(VK_OEM_2))
+	{
+		specChar = '/';
+	}
+	if (GetKeyState(VK_OEM_3))
+	{
+		specChar = '`';
+	}
+	if (GetKeyState(VK_OEM_4))
+	{
+		specChar = '[';
+	}
+	if (GetKeyState(VK_OEM_5))
+	{
+		specChar = '\\';
+	}
+	if (GetKeyState(VK_OEM_6))
+	{
+		specChar = ']';
+	}
+	if (GetKeyState(VK_OEM_7))
+	{
+		specChar = '\'';
+	}
+	if (GetKeyState(VK_OEM_8))
+	{
+		specChar = ';';
+	}
+
+	//if shifted
+	if(isShifted && specChar != NULL)
+	{
+		switch (specChar)
+		{
+		case '=':
+			return '+';
+
+		case '-':
+			return '_';
+
+		case ',':
+			return '<';
+
+		case '.':
+			return '>';
+
+		case '/':
+			return '?';
+
+		case '`':
+			return '~';
+
+		case '[':
+			return '{';
+
+		case '\\':
+			return '|';
+
+		case ']':
+			return '}';
+
+		case '\'':
+			return '"';
+
+		case ';':
+			return ':';
+
+		default:
+			break;
+		}
+	}
+
+	//special character
+	if(specChar != NULL)
+	{
+		return specChar;
+	}
+
+	//other characters
+	if(GetKeyState(VK_RETURN))
+	{
+		return '\n';
+	}
+	if(GetKeyState(VK_SPACE))
+	{
+		return ' ';
+	}
+
+	//no key down
+	return NULL;
+}

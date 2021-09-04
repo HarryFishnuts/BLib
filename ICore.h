@@ -299,4 +299,17 @@ BLByte BLICheckKeyDownAlphaNumeric( );
 *************************************************************/
 BLByte BLICheckKeyPushedAlphaNumeric( );
 
+/*************************************************************
+* NAME: BLIGetNextChar
+* DATE: 2021 - 09 - 3
+* PARAMS:
+*	none
+* RETURNS:
+*	char, mapping to which key is pushed down (UPPERCASE)
+* NOTE:
+*	This function covers ALL CHARS, however, it is not recommended
+*	for typing related purposes, rather, input purposes
+*************************************************************/
+BLByte BLIGetCharDown( );
+
 #endif
