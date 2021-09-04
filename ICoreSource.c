@@ -978,7 +978,7 @@ BLByte BLIGetCharDown()
 	{
 		specChar = '\'';
 	}
-	if (GetKeyState(VK_OEM_8) < 0)
+	if (GetKeyState(VK_OEM_1) < 0)
 	{
 		specChar = ';';
 	}
@@ -1040,6 +1040,10 @@ BLByte BLIGetCharDown()
 	if(GetKeyState(VK_SPACE) < 0)
 	{
 		return ' ';
+	}
+	if(GetKeyState(VK_BACK) < 0)
+	{
+		return (BLByte)8;
 	}
 
 	//no key down

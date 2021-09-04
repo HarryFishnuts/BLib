@@ -29,7 +29,7 @@
 #define BL_ICORE_LINE_BUF_SIZE 0x80
 #define BL_ICORE_LINE_COUNT    0x40
 
-#define BL_ICORE_CHAR_MATCH_COUNT 0x8
+#define BL_ICORE_CHAR_MATCH_COUNT 0x20
 
 /*************************************************************
 * NAME: BL_CENTER_TYPE
