@@ -834,27 +834,27 @@ BLByte BLICheckKeyDownAlphaNumeric( )
 *	This function returns a NEWLY pressed down key. This function
 *	is meant for typing related events!
 *************************************************************/
-static BLByte lastPressed = NULL;
+static BLByte kpa_lastPressed = NULL;
 BLByte BLICheckKeyPushedAlphaNumeric( )
 {
 	//get current key down
 	BLByte currentPressed = BLICheckKeyDownAlphaNumeric( );
 
 	//if key down is the same as last time, returns NULL
-	if(currentPressed == lastPressed)
+	if(currentPressed == kpa_lastPressed)
 	{
 		return NULL;
 	}
 	else
 	{
 		//else, return new key down, update last pressed
-		lastPressed = currentPressed;
+		kpa_lastPressed = currentPressed;
 		return currentPressed;
 	}
 }
 
 /*************************************************************
-* NAME: BLIGetNextChar
+* NAME: BLIGetCharDown
 * DATE: 2021 - 09 - 3
 * PARAMS:
 *	none
@@ -888,7 +888,7 @@ BLByte BLIGetCharDown()
 	}
 
 	//check if shifted
-	int isShifted = GetKeyState(VK_SHIFT);
+	int isShifted = GetKeyState(VK_SHIFT) < 0;
 
 	//check all number special characters
 	if(isShifted && cNum != NULL)
@@ -938,47 +938,47 @@ BLByte BLIGetCharDown()
 
 	//other special characters
 	BLByte specChar = NULL;
-	if(GetKeyState(VK_OEM_PLUS))
+	if(GetKeyState(VK_OEM_PLUS) < 0)
 	{
 		specChar = '=';
 	}
-	if(GetKeyState(VK_OEM_MINUS))
+	if(GetKeyState(VK_OEM_MINUS) < 0)
 	{
 		specChar = '-';
 	}
-	if (GetKeyState(VK_OEM_COMMA))
+	if (GetKeyState(VK_OEM_COMMA) < 0)
 	{
 		specChar = ',';
 	}
-	if (GetKeyState(VK_OEM_PERIOD))
+	if (GetKeyState(VK_OEM_PERIOD) < 0)
 	{
 		specChar = '.';
 	}
-	if (GetKeyState(VK_OEM_2))
+	if (GetKeyState(VK_OEM_2) < 0)
 	{
 		specChar = '/';
 	}
-	if (GetKeyState(VK_OEM_3))
+	if (GetKeyState(VK_OEM_3) < 0)
 	{
 		specChar = '`';
 	}
-	if (GetKeyState(VK_OEM_4))
+	if (GetKeyState(VK_OEM_4) < 0)
 	{
 		specChar = '[';
 	}
-	if (GetKeyState(VK_OEM_5))
+	if (GetKeyState(VK_OEM_5) < 0)
 	{
 		specChar = '\\';
 	}
-	if (GetKeyState(VK_OEM_6))
+	if (GetKeyState(VK_OEM_6) < 0)
 	{
 		specChar = ']';
 	}
-	if (GetKeyState(VK_OEM_7))
+	if (GetKeyState(VK_OEM_7) < 0)
 	{
 		specChar = '\'';
 	}
-	if (GetKeyState(VK_OEM_8))
+	if (GetKeyState(VK_OEM_8) < 0)
 	{
 		specChar = ';';
 	}
@@ -1033,15 +1033,76 @@ BLByte BLIGetCharDown()
 	}
 
 	//other characters
-	if(GetKeyState(VK_RETURN))
+	if(GetKeyState(VK_RETURN) < 0)
 	{
 		return '\n';
 	}
-	if(GetKeyState(VK_SPACE))
+	if(GetKeyState(VK_SPACE) < 0)
 	{
 		return ' ';
 	}
 
 	//no key down
+	return NULL;
+}
+
+/*************************************************************
+* NAME: BLIGetChar
+* DATE: 2021 - 09 - 3
+* PARAMS:
+*	none
+* RETURNS:
+*	char, mapping to which key is newly pushed down, will return
+*	a continuous stream of chars if key is held down
+* NOTE:
+*	This function covers ALL CHARS and is intended for
+*	typing related purposes
+*************************************************************/
+static BLByte gc_lastDown    = NULL;
+static BLInt  gc_matchCount = NULL;
+BLByte BLIGetChar( )
+{
+	//get latest key down
+	BLByte currentlyDown = BLIGetCharDown( );
+
+	//check if NULL
+	if(currentlyDown == NULL)
+	{
+		//reset all, return NULL
+		gc_lastDown   = NULL;
+		gc_matchCount = NULL;
+		return NULL;
+	}
+
+	//check if matching to last down
+	if(currentlyDown == gc_lastDown)
+	{
+		gc_matchCount++;
+
+		//check if key is being held down
+		if(gc_matchCount > BL_ICORE_CHAR_MATCH_COUNT)
+		{
+			return currentlyDown;
+		}
+		else
+		{
+			//else, return NULL
+			return NULL;
+		}
+	}
+	else
+	{
+		//if new key down, return the new down
+		//update lastDown
+		gc_lastDown = currentlyDown;
+
+		//reset count
+		gc_matchCount = NULL;
+
+		//end
+		return currentlyDown;
+	}
+
+	//end
 	return NULL;
 }

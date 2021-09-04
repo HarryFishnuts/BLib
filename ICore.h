@@ -29,6 +29,8 @@
 #define BL_ICORE_LINE_BUF_SIZE 0x80
 #define BL_ICORE_LINE_COUNT    0x40
 
+#define BL_ICORE_CHAR_MATCH_COUNT 0x8
+
 /*************************************************************
 * NAME: BL_CENTER_TYPE
 * DATE: 2021 - 08 - 3
@@ -270,7 +272,7 @@ int BLICheckMouseLeftDown( );
 int BLICheckMouseRightDown( );
 
 /*************************************************************
-* NAME: BLICheckKeyDownAlphaNumeric
+* NAME: BLICheckKeyDownAlphaNumeric (DEPRECATED)
 * DATE: 2021 - 09 - 3
 * PARAMS:
 *	none
@@ -285,7 +287,7 @@ int BLICheckMouseRightDown( );
 BLByte BLICheckKeyDownAlphaNumeric( );
 
 /*************************************************************
-* NAME: BLICheckKeyPushedAlphaNumeric
+* NAME: BLICheckKeyPushedAlphaNumeric (DEPRECATED)
 * DATE: 2021 - 09 - 3
 * PARAMS:
 *	none
@@ -300,7 +302,7 @@ BLByte BLICheckKeyDownAlphaNumeric( );
 BLByte BLICheckKeyPushedAlphaNumeric( );
 
 /*************************************************************
-* NAME: BLIGetNextChar
+* NAME: BLIGetCharDown
 * DATE: 2021 - 09 - 3
 * PARAMS:
 *	none
@@ -311,5 +313,19 @@ BLByte BLICheckKeyPushedAlphaNumeric( );
 *	for typing related purposes, rather, input purposes
 *************************************************************/
 BLByte BLIGetCharDown( );
+
+/*************************************************************
+* NAME: BLIGetChar
+* DATE: 2021 - 09 - 3
+* PARAMS:
+*	none
+* RETURNS:
+*	char, mapping to which key is newly pushed down, will return
+*	a continuous stream of chars if key is held down
+* NOTE:
+*	This function covers ALL CHARS and is intended for
+*	typing related purposes
+*************************************************************/
+BLByte BLIGetChar( );
 
 #endif
