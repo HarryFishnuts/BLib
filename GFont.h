@@ -85,15 +85,17 @@
 #define BL_VSTR_PERIOD     "11102120"
 #define BL_VSTR_SLASH      "3433221110"
 
-#define BL_VSTR_QUESTION  "14243433232220"
-#define BL_VSTR_OPEN_JAG  "3423122130"
-#define BL_VSTR_CLOSE_JAG "1423322110"
-#define BL_VSTR_COLON     "2321"
-#define BL_VSTR_EQUAL     "132333112131"
-#define BL_VSTR_SEMICOLON "232120"
-#define BL_VSTR_QUOTE     "14133433"
-#define BL_VSTR_OPEN_BOX  "24141312111020"
-#define BL_VSTR_CLOSE_BOX "24343332313020"
+#define BL_VSTR_QUESTION   "14243433232220"
+#define BL_VSTR_OPEN_JAG   "3423122130"
+#define BL_VSTR_CLOSE_JAG  "1423322110"
+#define BL_VSTR_COLON      "2321"
+#define BL_VSTR_EQUAL      "132333112131"
+#define BL_VSTR_SEMICOLON  "232120"
+#define BL_VSTR_QUOTE      "14133433"
+#define BL_VSTR_OPEN_BOX   "24141312111020"
+#define BL_VSTR_CLOSE_BOX  "24343332313020"
+#define BL_VSTR_OPEN_CURL  "24141302111020"
+#define BL_VSTR_CLOSE_CURL "24343342313020"
 
 typedef uint8_t BLCIndex;
 
@@ -120,8 +122,8 @@ typedef uint8_t BLCIndex;
 *	|	2.  2	|   13. D	|   24. O	|   35. Z	|   46. +	|	57. "	|
 *	|	3.  3	|   14. E	|   25. P	|   36.		|   47. ,	|	58. [	|
 *	|	4.  4	|   15. F	|   26. Q	|   37. !	|   48. -	|	59. ]	|
-*	|	5.  5	|   16. G	|   27. R	|   38. #	|   49. .	|
-*	|	6.  6	|   17. H	|   28. S	|   39. $	|   50. /	|
+*	|	5.  5	|   16. G	|   27. R	|   38. #	|   49. .	|	60. {	|
+*	|	6.  6	|   17. H	|   28. S	|   39. $	|   50. /	|	61. }	|
 *	|	7.  7	|   18. I	|   39. T	|   40. %	|   51. ?	|
 *	|	8.  8	|   19. J	|   30. U	|   41. &	|   52. <	|
 *	|	9.  9	|   20. K	|   31. V	|   42. '	|   53. >	|
