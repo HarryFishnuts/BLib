@@ -1,7 +1,7 @@
 
 
 /*************************************************************
-* FILE: ICoreSource.c
+* FILE: BLibSource.c
 * DATE: 2021 - 09 - 12
 * DEVS: Bailey Jia-Tao Brown
 * DESC:
